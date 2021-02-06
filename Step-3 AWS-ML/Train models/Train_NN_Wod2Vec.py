@@ -2,9 +2,18 @@
 Description:
     Performs NLP on CV/resume description recognition and job prediction by using Word2Vec, training a Neural Network.
 
-    Warning !! The Word2Vec model must be downloaded here : https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz and place in the same script location
+    Warning !! The Word2Vec model must be downloaded here : https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz and place the Data directory.
 '''
 
+## Constants
+MODEL_PATH = '../Models/NN_Word2Vec.joblib'
+WORD2VEC_MODEL = '../Data/GoogleNews-vectors-negative300.bin.gz'
+DATA_FILE = '../Data/data.json'
+CATEGORIES_FILE = '../Data/categories_string.csv'
+LABEL_FILE = '../Data/label.csv'
+
+
+## Imports
 # for data
 import json
 import pandas as pd
@@ -73,9 +82,9 @@ def utils_preprocess_text(text, flg_stemm=False, flg_lemm=True, number=False, ls
 
 # Loading data, labels and categories
 print('[INFO] Loading data, labels and categories')
-data     = pd.read_json("../Notebook/data.json")
-category = pd.read_csv("../Notebook/categories_string.csv")
-label    = pd.read_csv("../Notebook/label.csv")
+data     = pd.read_json(DATA_FILE)
+category = pd.read_csv(CATEGORIES_FILE)
+label    = pd.read_csv(LABEL_FILE)
 
 
 # Merging data
@@ -97,7 +106,7 @@ data_clean["description_clean"] = data_clean["description"].apply(lambda x: util
 
 # Retrieve Word2Vec model
 print('[INFO] Importing Word2Vec Model')
-wv = KeyedVectors.load_word2vec_format("GoogleNews-vectors-negative300.bin.gz", binary=True)
+wv = KeyedVectors.load_word2vec_format(WORD2VEC_MODEL, binary=True)
 wv.init_sims(replace=True)
 
 # Downloading punkt from nltk
@@ -163,4 +172,4 @@ nn_classifier.fit(X_train_word_average, train['Category'])
 
 # Export classifier
 print('[INFO] Export classifier')
-dump(nn_classifier, 'Models/NN_Word2Vec.joblib')
+dump(nn_classifier, MODEL_PATH)

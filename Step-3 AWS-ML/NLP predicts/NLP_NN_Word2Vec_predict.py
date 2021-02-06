@@ -2,9 +2,18 @@
 Description:
     Performs NLP on CV/resume description prediction by using Word2Vec with Neural Network model.
 
-    Warning !! The Word2Vec model must be downloaded here : https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz and place in the same script location.
-               The model should be also in the same location.
+    Warning !! The Word2Vec model must be downloaded here : https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz and place the Data directory.
+               The model should be in the Models directory.
 '''
+
+
+## Constants
+MODEL_PATH = '../Models/NN_Word2Vec.joblib'
+PREDICT_FILE_PATH = '../Predict creation/Predict.csv'
+RESULT_PREDICT_FILE_PATH = 'Predict_result_word2vec.csv'
+WORD2VEC_MODEL = '../Data/GoogleNews-vectors-negative300.bin.gz'
+
+
 ## Imports
 # for data
 import pandas as pd
@@ -74,7 +83,7 @@ def utils_preprocess_text(text, flg_stemm=False, flg_lemm=True, number=False, ls
 
 # Loading data, labels and categories
 print('[INFO] Loading predict')
-predict = pd.read_csv("Predict.csv")
+predict = pd.read_csv(PREDICT_FILE_PATH)
 
 
 # Downloading stopword from nltk
@@ -93,7 +102,7 @@ data_clean["description_clean"] = data_clean["description"].apply(lambda x: util
 ## Word2Vec
 # Retrieve Word2Vec model
 print('[INFO] Importing Word2Vec Model')
-wv = KeyedVectors.load_word2vec_format("GoogleNews-vectors-negative300.bin.gz", binary=True)
+wv = KeyedVectors.load_word2vec_format(WORD2VEC_MODEL, binary=True)
 wv.init_sims(replace=True)
 
 # Downloading punkt from nltk
@@ -146,12 +155,16 @@ print('[INFO] Averaging')
 X_word_average = word_averaging_list(wv, data_tokenized)
 
 # Get model
-model_word2vec_nn = load('Models/NN_Word2Vec.joblib')
+print('[INFO] Get model')
+model_word2vec_nn = load(MODEL_PATH)
 
 # Create dataset prediction
+print('[INFO] Predict category')
 y_predict = model_word2vec_nn.predict(X_word_average)
 df_predict = pd.DataFrame(predict)
+df_predict.drop('description_clean',1,inplace=True)
 df_predict['Prediction'] = pd.DataFrame(y_predict)
 
 # Export data in csv file
-df_predict.to_csv('Predict_result_word2vec.csv')
+print('[INFO] Export result predict file')
+df_predict.to_csv(RESULT_PREDICT_FILE_PATH)
