@@ -20,5 +20,5 @@ Les parties 3 et 4 sont placées dans le même dossier, car elles traitent toute
 - `Predict creation` qui fournit un script de création du fichier `predict.csv` permettant d'assurer que les données à prédire n'ont pas été utilisées lors de la phase d'entraînement. Il utilise les données du sous-répertoire `Data` et stocke ce fichier dans ce même emplacement.
 - `Train models` dans lequel sont présents les scripts d'entraînement des modèles. Leurs contenus sont tirés des résultats des Notebooks. De plus, le modèle est entraîné avec les données contenues dans le sous répertoire `Data` et la version entraînée est placée directement `Models`.
 
-# Step 5 : VM AWS - MongoDB
+## Step 5 : VM AWS - MongoDB
 Cette partie est réalisée par un seul script `script_aws_vm-mongodb.py`. Il permet dans un premier temps de rapatrier le fichier prédictions localement. Puis, il itère sur les lignes de ce fichier pour insérer une à une ligne dans la base de données `Mongo`. Il faudra préalablement créer la base de données sous le nom `bigdata_db` pour que la collection `predicts` puisse y être ajoutée.
