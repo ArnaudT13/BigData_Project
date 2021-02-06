@@ -65,9 +65,9 @@ def utils_preprocess_text(text, flg_stemm=False, flg_lemm=True, number=True, lst
 
 # Loading data, labels and categories
 print('[INFO] Loading data, labels and categories')
-data     = pd.read_json("Notebook/data.json")
-category = pd.read_csv("Notebook/categories_string.csv")
-label    = pd.read_csv("Notebook/label.csv")
+data     = pd.read_json("../Notebook/data.json")
+category = pd.read_csv("../Notebook/categories_string.csv")
+label    = pd.read_csv("../Notebook/label.csv")
 
 # Merging data
 data = pd.merge(data, label, how="right", on="Id")
@@ -114,12 +114,9 @@ data_Tfidf = vectorizerTfidf.transform(data_clean["description_clean"])
 X_Tfidf_train, X_Tfidf_test, y_Tfidf_train, y_Tfidf_test = train_test_split(data_Tfidf, data_clean["Category"], test_size=0.2, random_state=211101)
 
 # Classification with a Neural Network : 1 layer of 50 neurons, RELU, strong penalization (alpha = 3)
-X = data_Tfidf
-y = data_clean["Category"]
-
 print('[INFO] Classification (this may take time)')
 nn_Tfidf = MLPClassifier(solver="lbfgs", hidden_layer_sizes=(50), alpha=3, activation="relu", max_iter=5000, random_state=0)
-nn_Tfidf.fit(X, y)
+nn_Tfidf.fit(X_Tfidf_train, y_Tfidf_train)
 
 # Export classifier
 print('[INFO] Export classifier')
