@@ -1,8 +1,16 @@
 '''
 Description:
-    Performs NLP on CV/resume description recognition and job prediction 
+    Performs NLP on CV/resume description recognition and job prediction
     by using TF-IDF, SVD feature selection and training a Neural Network.
 '''
+
+## Constants
+MODEL_PATH = '../Models/NN_TFIDF_Chi2.joblib'
+PREDICT_FILE_PATH = '../Predict creation/Predict.csv'
+RESULT_PREDICT_FILE_PATH = 'Predict_result_Chi2.csv'
+
+
+## Imports
 
 # for data
 import json
@@ -69,7 +77,7 @@ category = pd.read_csv("../Notebook/categories_string.csv")
 label    = pd.read_csv("../Notebook/label.csv")
 
 ## Data aquisition
-predict = pd.read_csv("Predict.csv")
+predict = pd.read_csv(PREDICT_FILE_PATH)
 data = predict
 
 # Downloading stopword from nltk
@@ -113,7 +121,7 @@ data_Tfidf = vectorizerTfidf.transform(data_clean["description_clean"])
 
 # Loading model & predictions
 print('[INFO] Predictions')
-nn_Tfidf = load('../Models/NN_TFIDF_Chi2.joblib')
+nn_Tfidf = load(MODEL_PATH)
 
 X_features_Tfidf = data_Tfidf
 
@@ -122,4 +130,4 @@ df_predict = pd.DataFrame(predict)
 df_predict['Prediction'] = pd.DataFrame(y_predict)
 
 # Export data in csv file
-df_predict.to_csv('Predict_result_Chi2.csv')
+df_predict.to_csv(RESULT_PREDICT_FILE_PATH)

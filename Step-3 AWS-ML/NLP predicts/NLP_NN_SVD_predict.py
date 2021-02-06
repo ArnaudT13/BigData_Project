@@ -1,8 +1,16 @@
 '''
 Description:
-    Performs NLP on CV/resume description recognition and job prediction 
+    Performs NLP on CV/resume description recognition and job prediction
     by using TF-IDF, SVD feature selection and training a Neural Network.
 '''
+
+## Constants
+MODEL_PATH = '../Models/NN_TFIDF_SVD.joblib'
+PREDICT_FILE_PATH = '../Predict creation/Predict.csv'
+RESULT_PREDICT_FILE_PATH = 'Predict_result_SVD.csv'
+
+
+## Imports
 
 # for data
 import json
@@ -64,18 +72,12 @@ def utils_preprocess_text(text, flg_stemm=False, flg_lemm=True, number=True, lst
     text = " ".join(lst_text)
     return text
 
-# Loading labels and categories
-print('[INFO] Loading data, labels and categories')
-category = pd.read_csv("../Notebook/categories_string.csv")
-label    = pd.read_csv("../Notebook/label.csv")
 
 # Loading labels and categories
 print('[INFO] Loading data to predict')
-predict = pd.read_csv("Predict.csv")
+predict = pd.read_csv(PREDICT_FILE_PATH)
 data = predict
 
-# Merging data
-data = pd.merge(data, label, how="right", on="Id")
 
 # Downloading stopword from nltk
 print('[INFO] Downloading stopword from nltk')
@@ -102,11 +104,11 @@ X_features_Tfidf = svd.fit_transform(data_Tfidf)
 
 # Loading model & predictions
 print('[INFO] Predictions')
-nn_Tfidf = load('../Models/NN_TFIDF_SVD.joblib')
+nn_Tfidf = load(MODEL_PATH)
 
 y_predict = nn_Tfidf.predict(X_features_Tfidf)
 df_predict = pd.DataFrame(predict)
 df_predict['Prediction'] = pd.DataFrame(y_predict)
 
 # Export data in csv file
-df_predict.to_csv('Predict_result_SVD.csv')
+df_predict.to_csv(RESULT_PREDICT_FILE_PATH)

@@ -4,6 +4,14 @@ Description:
 
 '''
 
+## Constants
+MODEL_PATH = '../Models/NN_TFIDF_Chi2.joblib'
+DATA_FILE = '../Data/data.json'
+CATEGORIES_FILE = '../Data/categories_string.csv'
+LABEL_FILE = '../Data/label.csv'
+
+## Imports
+
 # for data
 import json
 import pandas as pd
@@ -65,9 +73,9 @@ def utils_preprocess_text(text, flg_stemm=False, flg_lemm=True, number=True, lst
 
 # Loading data, labels and categories
 print('[INFO] Loading data, labels and categories')
-data     = pd.read_json("../Notebook/data.json")
-category = pd.read_csv("../Notebook/categories_string.csv")
-label    = pd.read_csv("../Notebook/label.csv")
+data     = pd.read_json(DATA_FILE)
+category = pd.read_csv(CATEGORIES_FILE)
+label    = pd.read_csv(LABEL_FILE)
 
 # Merging data
 data = pd.merge(data, label, how="right", on="Id")
@@ -120,4 +128,4 @@ nn_Tfidf.fit(X_Tfidf_train, y_Tfidf_train)
 
 # Export classifier
 print('[INFO] Export classifier')
-dump(nn_Tfidf, 'Models/NN_TFIDF_Chi2.joblib')
+dump(nn_Tfidf, MODEL_PATH)
