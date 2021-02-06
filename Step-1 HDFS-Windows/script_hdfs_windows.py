@@ -1,18 +1,23 @@
 # pip install scp
 # pip install paramiko
 
+## Imports
+
 import paramiko
 from scp import SCPClient
 import logging
 
-host = "localhost"
+## Constants
 
-port = 2222
-username = "maria_dev"
-password = "maria_dev"
-
+HOST = "localhost"
+PORT = 2222
+USERNAME = "maria_dev"
+PASSWORD = "maria_dev"
 VM_DIR = "/home/maria_dev/data/"
-files = ['data.json', 'label.csv', 'categories_string.csv']
+FILES_LIST = ['data.json', 'label.csv', 'categories_string.csv']
+
+
+## Import files
 
 def main():
 
@@ -24,7 +29,7 @@ def main():
 
     # Connect to ssh server
     try:
-        ssh.connect(host, port, username, password)
+        ssh.connect(HOST, PORT, USERNAME, PASSWORD)
     except paramiko.ssh_exception.NoValidConnectionsError as e:
         logging.error('Server authentification --> %s', e.args[1])
         return
@@ -40,7 +45,7 @@ def main():
     # Create scp client
     scp = SCPClient(ssh.get_transport())
 
-    for f in files:
+    for f in FILES_LIST:
 
         logging.info("Transfert Start :", f)
 

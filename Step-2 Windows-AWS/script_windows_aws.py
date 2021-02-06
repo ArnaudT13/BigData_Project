@@ -1,17 +1,23 @@
+
+## Imports
+
 import paramiko
 from scp import SCPClient
 import logging
 
 
-# Constants
-host = "ec2-54-198-36-217.compute-1.amazonaws.com"
-port = 22
-username = "ec2-user"
-password = ""
-rsa_key_filename = '/Temp/BigData/Key/bigdataproject.pem'
-files_path_list = ['/Temp/BigData/categories_string.csv', '/Temp/BigData/label.csv', '/Temp/BigData/data.json']
-aws_directory_path = '/home/ec2-user/'
+## Constants
 
+HOST = "ec2-54-91-166-72.compute-1.amazonaws.com"
+PORT = 22
+USERNAME = "ec2-user"
+PASSWORD = ""
+RSA_KEY_FILENAME = '/Temp/BigData/Key/bigdataproject.pem'
+FILES_PATH_LIST = ['/Temp/BigData/categories_string.csv', '/Temp/BigData/label.csv', '/Temp/BigData/data.json']
+AWS_DIRECTORY_PATH = '/home/ec2-user/'
+
+
+## Export files
 
 def main():
 
@@ -22,8 +28,8 @@ def main():
 
     # Connect to ssh server
     try:
-        key = paramiko.RSAKey.from_private_key_file(rsa_key_filename)
-        ssh.connect(hostname=host, port=port, username=username, password=password, pkey=key)
+        key = paramiko.RSAKey.from_private_key_file(RSA_KEY_FILENAME)
+        ssh.connect(hostname=HOST, port=PORT, username=USERNAME, password=PASSWORD, pkey=key)
     except paramiko.ssh_exception.NoValidConnectionsError as e:
         logging.error('Server authentification --> %s', e.args[1])
         return
@@ -41,8 +47,8 @@ def main():
     scp = SCPClient(ssh.get_transport())
 
     # Put file on AWS instance
-    for f in files_path_list:
-        put_file(scp, f, aws_directory_path)
+    for f in FILES_PATH_LIST:
+        put_file(scp, f, AWS_DIRECTORY_PATH)
         logging.info('File ' + f + ' sent')
 
     # Close clients
