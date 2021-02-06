@@ -120,4 +120,4 @@ nn_Tfidf.fit(X_Tfidf_train, y_Tfidf_train)
 
 # Export classifier
 print('[INFO] Export classifier')
-dump(nn_Tfidf, 'Models/NN_TFIDF_CHI2.joblib')
+dump(nn_Tfidf, 'Models/NN_TFIDF_Chi2.joblib')
