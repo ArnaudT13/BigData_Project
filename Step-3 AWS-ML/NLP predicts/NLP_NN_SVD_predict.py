@@ -32,6 +32,9 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.decomposition import TruncatedSVD
 from joblib import dump, load
 
+
+## Data acquisition and preprocessing
+
 '''
 Preprocess a CV extract
 :parameter
@@ -90,6 +93,9 @@ lst_stopwords = nltk.corpus.stopwords.words("english")
 print('[INFO] Preprocessing data (cleaning data)')
 data_clean = data
 data_clean["description_clean"] = data_clean["description"].apply(lambda x: utils_preprocess_text(x, flg_stemm=False, flg_lemm=True, number=True, lst_stopwords=lst_stopwords))
+
+
+## TF-IDF and SVD
 
 # Vectorization with TF-IDF
 print('[INFO] Vectorization with TF-IDF')
