@@ -1,6 +1,6 @@
 '''
 Description:
-    Performs NLP on CV/resume description recognition and job prediction 
+    Performs NLP on CV/resume description recognition and job prediction
     by using TF-IDF, SVD feature selection and training a Neural Network.
 '''
 
@@ -107,4 +107,4 @@ nn_Tfidf.fit(X, y)
 
 # Export classifier
 print('[INFO] Export classifier')
-dump(nn_Tfidf, 'Models/NN_TFIDF_CHI2.joblib')
+dump(nn_Tfidf, 'Models/NN_TFIDF_SVD.joblib')
