@@ -6,7 +6,7 @@ Ce projet est séparé en cinq parties distinctes, dont quatre sont disponibles 
 Dans cette étape, les données mises à disposition doivent être transmises sur le système de fichier `HDFS` de la plateforme `Hadoop`. Aucun dossier ou ressource sont associés dans ce repository car les opérations ont été réalisées directement avec l'interface d'`Hadoop` `Ambari`.
 
 ## Step 1 : HDFS - Host
-Le but de cette étape est de réaliser l'opération inverse de l'étape 0. Pour cela, deux scripts sont déployés : le premier `name hadoop script` permet de transmettre les données du système de fichier HDFS vers la machine `Hadoop` (VM linux) et le second `script_hdfs_windows.py` de la machine `Hadoop` vers le système hôte (Windows). Ils sont respectivement écrits en `Bash` et en `Python`.
+Le but de cette étape est de réaliser l'opération inverse de l'étape 0. Pour cela, deux scripts sont déployés : le premier `script_hdfs_hadoop.sh` permet de transmettre les données du système de fichier HDFS vers la machine `Hadoop` (VM linux) et le second `script_hadoop_windows.py` de la machine `Hadoop` vers le système hôte (Windows). Ils sont respectivement écrits en `Bash` et en `Python`.
 
 ## Step 2 : Host - VM AWS
 Le transfert des données de la machine hôte vers la VM AWS est réalisé grâce au script `Python` `script_windows_aws.py`. Le caractère sensible des données est pris en compte, car le transport se fait à travers un tunnel sécurisé `SSH`. En effet, les protocoles sécurisés `SSH` et `SCP` sont utilisés pour que les données soient chiffrées de bout en bout.
