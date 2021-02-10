@@ -31,14 +31,14 @@ Les parties 3 et 4 sont placées dans le même dossier, car elles traitent toute
 Pour le choix de la technologie de Machine Learning, nous avons utilisé `Jupyter`. En effet, nous l'avons préalablement installé sur la VM AWS car celui-ci n'est pas présent initialement.  
 Toutes nos recherches sont détaillées et expliquées dans les trois Notebooks suivants (dans l'ordre de création):
 - `Notebook_ML_Count-TFIDF_Chi2.ipynb` qui propose un préprocessing des données, une vectorisation avec `Count` ou `TF-IDF`, une sélection des features avec la méthode du `Chi2` et une comparaison de la précision des différents classifiers sur cette base (mise en place de pipelines).
-- `Notebook_ML_Count-TFIDF_SVD.ipynb` qui propose la même chose que la méthodologie que le Notebook précédent, mais avec une sélection des features réalisé avec `SVD` (réduction de dimension).
+- `Notebook_ML_Count-TFIDF_SVD.ipynb` qui propose la même chose que le Notebook précédent, mais avec une sélection des features réalisée avec `SVD` (réduction de dimensions).
 - `Notebook_ML_Word2Vec_Doc2Vec.ipynb` qui propose un préprocessing, l'application de `Word2Vec` ou `Doc2Vec` ainsi qu'une comparaison de la précision des différents classifiers.
 
 ### Obtention des prédictions
-Pour obtenir les prédictions, nous avons réalisé les étapes suivantes:
+Pour obtenir les prédictions, nous avons réalisé les étapes suivantes :
 - Création du fichier `predict.csv` grâce au script `create_predict_csv.py`
-- Entrainement des modèles suivant la technologie (environ 1h) via les scripts de `Train models`
-- Réalisation des prédictions à partir du modèle obtenu précédemment et exporté dans `Models` (environ 5 min)
+- Entrainement des modèles suivant la technologie (environ 1h) via les scripts de `Train models` et exportation du modèle dans `Models`
+- Réalisation des prédictions à partir du modèle obtenu précédemment (environ 5 min)
 Pour vérifier les résultats et obtenir des statistiques nous avons importé les données dans un fichier Excel nommé `Prediction_score.xlsx`.  
 
 
