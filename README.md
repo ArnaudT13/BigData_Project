@@ -7,15 +7,18 @@ Ce projet est séparé en cinq parties distinctes, dont quatre sont disponibles 
 Dans cette étape, les données mises à disposition doivent être transmises sur le système de fichier `HDFS` de la plateforme `Hadoop`. Aucun dossier ou ressource sont associés dans ce repository car les opérations ont été réalisées directement avec l'interface d'`Hadoop` `Ambari`.  
 L’environnement Hadoop constitue le point de départ de notre projet.
 
+![step0](https://i.ibb.co/FHZRW8d/step0.jpg)
 
 ## Step 1 : HDFS - Host
 Le but de cette étape est de réaliser l'opération inverse de l'étape 0, qui est le transfert depuis le système `HDFS` vers le host Windows en passant par la VM `Haddop`. Pour cela, deux scripts sont déployés : le premier `script_hdfs_hadoop.sh` permet de transmettre les données du système de fichier HDFS vers la machine `Hadoop` (VM linux) et le second `script_hadoop_windows.py` de la machine `Hadoop` vers le système hôte (Windows). Ils sont respectivement écrits en `Bash` et en `Python`.
 
+![step1](https://i.ibb.co/wN9fKtc/step1.jpg)
 
 ## Step 2 : Host - VM AWS
 Le transfert des données de la machine hôte vers la VM AWS est réalisé grâce au script `Python` `script_windows_aws.py`. Le caractère sensible des données est pris en compte, car le transport se fait à travers un tunnel sécurisé `SSH`. En effet, les protocoles sécurisés `SSH` et `SCP` sont utilisés pour que les données soient chiffrées de bout en bout.  
 La VM AWS utilisée est une instance `EC2` avec 32Go de RAM et 8 coeurs (ces propriétés permettent seulement de réduire le temps de calcul).
 
+![step2](https://i.ibb.co/yymf2tL/step2.jpg)
 
 ## Step 3-4 : AWS ML
 ### Organisation des répertoires
@@ -34,6 +37,8 @@ Toutes nos recherches sont détaillées et expliquées dans les trois Notebooks 
 - `Notebook_ML_Count-TFIDF_SVD.ipynb` qui propose la même chose que le Notebook précédent, mais avec une sélection des features réalisée avec `SVD` (réduction de dimensions).
 - `Notebook_ML_Word2Vec_Doc2Vec.ipynb` qui propose un préprocessing, l'application de `Word2Vec` ou `Doc2Vec` ainsi qu'une comparaison de la précision des différents classifiers.
 
+![step3](https://i.ibb.co/sH9tMPz/step3.jpg)
+
 ### Obtention des prédictions
 Pour obtenir les prédictions, nous avons réalisé les étapes suivantes :
 - Création du fichier `predict.csv` grâce au script `create_predict_csv.py`
@@ -44,3 +49,5 @@ Pour vérifier les résultats et obtenir des statistiques nous avons importé le
 
 ## Step 5 : VM AWS - MongoDB
 Cette dernière partie est réalisée par un seul script `script_aws_vm-mongodb.py`. Il permet dans un premier temps de rapatrier le fichier de prédictions localement. Puis, il itère sur les lignes de ce fichier pour insérer une à une ligne dans la base de données `Mongo`. Il faudra préalablement créer la base de données sous le nom `bigdata_db` pour que la collection `predicts` puisse y être ajoutée.
+
+![step5](https://i.ibb.co/ZWYqfzh/step4.jpg)
